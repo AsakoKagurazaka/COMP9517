@@ -17,9 +17,11 @@ image2 = cv2.imread("imageQ22.tif")
 
 # Split the image into channels
 R, G, B = cv2.split(image2)
-output1_R = cv2.equalizeHist(R)
-output1_G = cv2.equalizeHist(G)
-output1_B = cv2.equalizeHist(B)
+
+# Equalize the image by each channel
+output1_R = cv2.equalizeHist(R)  # Red Channel 
+output1_G = cv2.equalizeHist(G)  # Green Channel
+output1_B = cv2.equalizeHist(B)  # Blue Channel
 
 # Merge the channels
 image2_t = cv2.merge((output1_R, output1_G, output1_B))

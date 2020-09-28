@@ -32,12 +32,12 @@ cv2.destroyAllWindows()
 # Perform histogram equalization
 hist_eq = cv2.equalizeHist(cont)
 
-cv2.imshow("History Equalization", hist_eq)
+cv2.imshow("Histogram Equalization", hist_eq)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
 
 # Show the result
-result = hist_eq 
+result = hist_eq  
 cv2.imshow("Restored Image", result)
 
 # Save the result to file. The code is ran once before submitting.

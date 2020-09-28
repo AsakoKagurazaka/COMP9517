@@ -70,7 +70,6 @@ grad_y = cv2.Sobel(image3, ddepth, 0, 1, ksize=3, scale=scale, delta=delta, bord
 # Absolute value
 abs_grad_x = cv2.convertScaleAbs(grad_x)
 abs_grad_y = cv2.convertScaleAbs(grad_y)
-    
 
 # Show the images
 cv2.imshow("Original", image3)
@@ -78,7 +77,7 @@ cv2.imshow("Convolution X axis", image3_cx)
 cv2.imshow("Convolution Y axis", image3_cy)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-# Due to machine limitations, the image displaying sessions are split in two, press any key to go to the next session
+# Due to hardware limitations, the image displaying sessions are split in two, press any key to go to the next session
 cv2.imshow("Convolution X axis", abs_grad_x)
 cv2.imshow("Convolution Y axis", abs_grad_y)
 cv2.waitKey(0)

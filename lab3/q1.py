@@ -1,12 +1,21 @@
 import cv2
 import numpy as np
-import sys
-from sklearn.datasets import make_blobs
 from sklearn.cluster import MeanShift, estimate_bandwidth
-
-# Plot result
 import matplotlib.pyplot as plt
-from itertools import cycle
+from scipy import ndimage as ndi
+from skimage.segmentation import watershed
+from skimage.feature import peak_local_max
+
+
+def water_shed(filename):
+    color = cv2.imread(filename)
+    image = cv2.cvtColor(color, cv2.COLOR_BGR2GRAY)
+    distance = ndi.distance_transform_edt(image)
+    local_maxi = peak_local_max(distance, indices=False, labels=image)
+    markers = ndi.label(local_maxi)[0]
+    labels = watershed(-distance, markers, mask=image)
+    return labels
+
 
 def mean_shift(filename):
     dim = (480, 320)
@@ -32,18 +41,36 @@ def mean_shift(filename):
     transposed = image1_labels.transpose()
     return transposed
 
+
 if __name__ == "__main__":
     p1 = plt.imread("imgQ41.jpg")
     p2 = plt.imread("imgQ42.jpg")
     ms1 = mean_shift("imgQ41.jpg")
     ms2 = mean_shift("imgQ42.jpg")
-    plt.figure(1)
-    plt.subplot(221)
+    ws1 = water_shed("imgQ41.jpg")
+    ws2 = water_shed("imgQ42.jpg")
+    plt.figure(figsize=(16, 5))
+    plt.subplot(131)
+    plt.gca().set_title('Original')
     plt.imshow(p1)
-    plt.subplot(222)
-    plt.imshow(ms1)
-    plt.subplot(223)
+    plt.subplot(132)
+    plt.gca().set_title('MeanShift')
+    plt.imshow(ms1, cmap="tab10")
+    plt.subplot(133)
+    plt.gca().set_title('Watershed')
+    plt.imshow(ws1, cmap=plt.cm.nipy_spectral)
+    plt.savefig("1.png")
+    plt.show()
+
+    plt.figure(figsize=(16, 5))
+    plt.subplot(131)
+    plt.gca().set_title('Original')
     plt.imshow(p2)
-    plt.subplot(224)
-    plt.imshow(ms2)
+    plt.subplot(132)
+    plt.gca().set_title('MeanShift')
+    plt.imshow(ms2, cmap="tab10")
+    plt.subplot(133)
+    plt.gca().set_title('Watershed')
+    plt.imshow(ws2, cmap=plt.cm.nipy_spectral)
+    plt.savefig("2.png")
     plt.show()

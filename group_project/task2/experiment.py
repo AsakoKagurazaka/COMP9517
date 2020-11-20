@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-from os import listdir
+from os import listdir, path
 from os.path import isfile, join
 import csv
 import re
@@ -30,9 +30,13 @@ def load_plant_names():
             plant_names.append(path_name + plant_name)
     return plant_names
 
-X, Y_imgs = load('numpy_images.joblib')
-img_dim = Y_imgs[0].shape
-plant_names = load_plant_names()
+if path.exists('numpy_images.joblib'):
+    X, Y_imgs = load('numpy_images.joblib')
+    img_dim = Y_imgs[0].shape
+    plant_names = load_plant_names()
+else:
+    import data_loader
+    X, Y_imgs, plant_names = data_loader.main()
 X_train, X_test, Y_train, Y_test, plant_names_train, _ = train_test_split(
     X, Y_imgs, plant_names, train_size=10, random_state=3
 )

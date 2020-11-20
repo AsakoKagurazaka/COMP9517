@@ -1,7 +1,10 @@
-# Setup
-Python version: 3.7.7  
-No ```requirements.txt```... Install when prompted.
+# Set up
+Create virtual environment and install the required packages by
+```bash
+python -m virtualenv venv
+source ./venv/bin/activate
+```
 
-# Run model
-```python3 segmentation.py```  
-After training finished, running ```experiment.py``` also works.
+# Run different tasks
+After install the required packages, navigate to each task's directory, a README file is 
+supplied for running instruction.
